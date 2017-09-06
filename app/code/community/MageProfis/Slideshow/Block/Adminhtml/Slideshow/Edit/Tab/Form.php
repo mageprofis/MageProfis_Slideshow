@@ -115,6 +115,8 @@ class MageProfis_Slideshow_Block_Adminhtml_Slideshow_Edit_Tab_Form extends Mage_
             'image'     => $this->getSkinUrl('images/grid-cal.gif'),
             'time'      => true
         ));
+        
+        Mage::dispatchEvent('mageprofis_slideshow_adminhtml_slideshow_edit_tab_form_prepare_form', array('form' => $form, 'fieldset' => $fieldset));
 
         if (Mage::getSingleton('adminhtml/session')->getSlideshowData()) {
             $form->setValues(Mage::getSingleton('adminhtml/session')->getSlideshowData());

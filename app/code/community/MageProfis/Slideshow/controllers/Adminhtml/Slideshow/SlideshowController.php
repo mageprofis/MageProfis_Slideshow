@@ -105,12 +105,17 @@ class MageProfis_Slideshow_Adminhtml_Slideshow_SlideshowController extends Mage_
                         unset($postData['filename']);
                     }
                 }
-
+                
                 $slideshowModel
                     ->setData($postData)
                     ->setId($this->getRequest()->getParam('id'))
-                    ->save()
                 ;
+                
+                Mage::dispatchEvent('mageprofis_slideshow_save_action_before_save', array('model' => $slideshowModel, 'post_data' => $postData));
+                
+                $slideshowModel->save();
+                
+                Mage::dispatchEvent('mageprofis_slideshow_save_action_after_save', array('model' => $slideshowModel, 'post_data' => $postData));
 
                 Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__('Slide item was successfully saved'));
                 Mage::getSingleton('adminhtml/session')->setSlideshowData(false);
